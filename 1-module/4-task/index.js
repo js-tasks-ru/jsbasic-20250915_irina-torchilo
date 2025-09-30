@@ -1,10 +1,3 @@
 function checkSpam(str) {
-  const LowerCaseStr = str.toLowerCase();
-  if (LowerCaseStr.includes('1xbet') || LowerCaseStr.includes ('xxx')){
-    return true
-}
-else 
- {
-  return false
- }
+return str.toLowerCase().includes("1xbet") || str.toLowerCase().includes("xxx");
 }
