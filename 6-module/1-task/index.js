@@ -1,8 +1,13 @@
-class UserTable {
+export default class UserTable {
   constructor(rows) {
-    this.elem = document.createElement('table');
+    this.rows = rows;
+    this.elem = this._createTable();
+  }
 
-    this.elem.innerHTML = `
+  _createTable() {
+    const table = document.createElement('table');
+
+    table.innerHTML = `
       <thead>
         <tr>
           <th>Имя</th>
@@ -12,22 +17,28 @@ class UserTable {
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        ${rows.map(user => `
-          <tr>
-            <td>${user.name}</td>
-            <td>${user.age}</td>
-            <td>${user.salary}</td>
-            <td>${user.city}</td>
-            <td><button>X</button></td>
-          </tr>
-        `).join('')}
-      </tbody>
+      <tbody></tbody>
     `;
 
-    this.elem.addEventListener('click', (event) => {
-      if (event.target.tagName !== 'BUTTON') return;
-      event.target.closest('tr').remove();
-    });
+    const tbody = table.querySelector('tbody');
+
+    for (let row of this.rows) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.name}</td>
+        <td>${row.age}</td>
+        <td>${row.salary}</td>
+        <td>${row.city}</td>
+        <td><button>X</button></td>
+      `;
+
+      tr.querySelector('button').addEventListener('click', () => {
+        tr.remove();
+      });
+
+      tbody.appendChild(tr);
+    }
+
+    return table;
   }
 }
